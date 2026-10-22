@@ -1,0 +1,7 @@
+# Nunca versionar dados de clientes, listas de execução ou saídas
+grupos.txt
+excluir.txt
+inventario/
+output/
+*.cookies
+avant_oauth.*

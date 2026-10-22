@@ -1,0 +1,31 @@
+name: Avant Alexa CLI
+version: "0.13.0-avant10"
+slug: alexa_cli
+description: Inventário e administração (somente com aprovação) da Alexa via cli-anything-alexa v0.13.0
+url: https://github.com/jonwilliams84/cli-anything-alexa
+arch:
+  - amd64
+startup: once
+boot: manual
+init: false
+# Dados persistentes (sessão Alexa) ficam em /data, dentro do volume do próprio app.
+# Resultados JSON ficam em /config (= addon_configs/local_alexa_cli), sem cookies.
+map:
+  - addon_config:rw
+# Porta do login (proxy da Amazon). Desativada por padrão (null).
+# Só mapear temporariamente, na LAN, para o comando "auth login".
+ports:
+  3001/tcp: null
+ports_description:
+  3001/tcp: "Login Amazon (usar só durante o login, depois remover)"
+options:
+  command: "help"
+  region: "amazon.com.br"
+schema:
+  command: list(help|diagnostico|auth status|auth whoami|auth ping|auth login|auth logout|devices list|devices duplicates|devices capabilities|groups list|scenes list|routines list|echos list|devices delete|groups plano)
+  region: str
+  email: "email?"
+  proxy_host: "str?"
+  refazer_login: "bool?"
+  # devices delete / groups plano: só o que está em excluir.txt / grupos.txt; sem isto é simulação
+  confirmar_alteracoes: "bool?"
