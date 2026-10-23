@@ -1,4 +1,4 @@
-# Avant Alexa CLI (app local para Home Assistant)
+# Avant Alexa CLI (app para Home Assistant)
 
 Empacota o `cli-anything-alexa` v0.13.0 (commit 5abfab9…, MIT) num app isolado.
 Não instala nada no Python do Home Assistant Core.
@@ -12,7 +12,7 @@ Não instala nada no Python do Home Assistant Core.
 Cada execução roda **um** comando de leitura da lista permitida e termina.
 1. Escolha o comando em Configuração → `command`. Primeira execução obrigatória: `help`, que grava o `--help` real da versão instalada.
 2. Clique em Iniciar.
-3. Os resultados ficam em `/addon_configs/local_alexa_cli/output/`, sem cookies.
+3. Os resultados ficam em `/addon_configs/<slug>_alexa_cli/output/`, sem cookies.
 4. A sessão Amazon fica em `/data`, dentro do volume do app. Não fica na imagem nem em `.storage`.
 
 ## Login (somente LAN, temporário)
@@ -33,7 +33,7 @@ Aplicadas no build. Se o código original mudar, o build falha.
 3. **Rastreio (avant6).** Exceto em `help`, cada execução grava `output/<data>-<comando>-rastreio.jsonl`. O arquivo registra cada etapa da alexapy (resultado e presença sim/não de cada token) e cada chamada HTTP (método, host, caminho, status). Não grava valores de cookie ou token, query strings nem corpos.
 
 ## Alterações na Alexa (avant9)
-- `devices delete` exclui **somente** os applianceIds de `/addon_configs/local_alexa_cli/excluir.txt`.
+- `devices delete` exclui **somente** os applianceIds de `/addon_configs/<slug>_alexa_cli/excluir.txt`.
 - `groups plano` executa as linhas de `grupos.txt`, na ordem, uma ação por linha:
   - `add|GRUPO|endpointId` coloca o aparelho no cômodo;
   - `remove|GRUPO|endpointId` tira o aparelho do cômodo;
@@ -44,7 +44,7 @@ Aplicadas no build. Se o código original mudar, o build falha.
 - `discover` e `groups set` não estão liberados. A Tuya pode recadastrar itens excluídos na próxima descoberta.
 
 ## Atualização remota (avant10)
-- Se existir `/addon_configs/local_alexa_cli/run.sh`, o app usa esse script no lugar do embutido na imagem.
+- Se existir `/addon_configs/<slug>_alexa_cli/run.sh`, o app usa esse script no lugar do embutido na imagem.
 - Essa pasta é editável pelo File editor, inclusive fora da rede do cliente pelo acesso remoto do HA. Assim, ajustes de lógica não exigem copiar arquivos para `/addons` nem reconstruir o app.
 - Mudanças no `config.yaml`, como novos comandos na lista ou novas opções, ainda exigem atualizar o app em `/addons`.
 - Para voltar ao script embutido, apague o `run.sh` dessa pasta.
